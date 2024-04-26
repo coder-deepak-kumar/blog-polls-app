@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+    <h1>hello , {{ request.user.username }}</h1>
     {% for post in posts %}
         <article class="post">
             <time class="date">

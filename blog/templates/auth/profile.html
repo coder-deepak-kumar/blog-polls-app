@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Profile Page{% endblock title %}
+
+{% block content %}
+    <div class="row my-3 p-3">
+        <center><h1> Profile page of {{user.username}}</h1></center>
+    </div>
+
+    <table class="table w-100 table-hover">
+       <thead>
+          <tr id="header-paragraph-table-top">
+              <th>Username</th>
+              <th>Email</th>
+              <th>age</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr id="paragraph-table">
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }} </td>
+              <td>{{ user.age }}</td>
+          </tr>
+       </tbody>
+    </table>
+
+
+{% endblock content %}
