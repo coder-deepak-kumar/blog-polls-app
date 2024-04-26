@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     name = models.CharField(max_length=100)
+    password = models.CharField(max_length=200)
     email = models.EmailField()
-    age = models.IntegerField()
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
