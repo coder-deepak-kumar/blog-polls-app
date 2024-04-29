@@ -4,9 +4,31 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <form method="POST" class="form-group">
-	{% csrf_token %}
-	{{ form|crispy }}
-	<button type="submit" class="btn btn-success">Login</button>
-    </form>
+<section class="myform-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-area login-form">
+                    <div class="form-content">
+                        <h2>Login</h2>
+                        <p>Welcome to Star Blog. Star Blog one of the best blog in the world.</p>
+                    </div>
+                    <div class="form-input">
+                        <h2>Login</h2>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="myform-button">
+                                <button class="myform-btn">Login</button>
+                            </div>
+                        </form>
+                        <p class="text-center mt-2">Don't have an account? <a href="/register">Create an account</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
+
+
