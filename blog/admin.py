@@ -9,6 +9,6 @@ User = get_user_model()
 @admin.register(User)
 class UserAdmin(OrigUserAdmin):
   list_display = (
-    'id', 'first_name', 'last_name', 'username', 'email','age'
+    'id', 'first_name', 'last_name', 'username', 'email','age','mobile'
   )
 admin.site.register(Post)

@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import Post, User
 from django.utils import timezone
-from .forms import PostForm, RegistorForm, LoginForm
+from .forms import PostForm, RegistorForm, LoginForm, ProfileForm
 from django.contrib.auth import login, authenticate, logout 
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -42,7 +43,6 @@ def post_edit(request, pk):
 
 
 #Authentication
-
 def register_view(request):
     if request.method == "POST":
         form = RegistorForm(request.POST)
@@ -74,4 +74,18 @@ def logout_view(request):
 
 @login_required
 def profile(request):
-    return render(request, 'auth/profile.html')
+    user = request.user
+    return render(request, 'auth/profile.html', {"user": user})
+
+@login_required
+def profile_edit(request):
+    user = request.user
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'User Details updated succesfully.')
+            return redirect('user-profile')
+    else:
+        form = ProfileForm(instance=user)
+    return render(request, 'auth/profile_edit.html', {'form':form})
