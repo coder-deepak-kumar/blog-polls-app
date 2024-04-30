@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category
+from .models import Post, Category, Tag
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
@@ -33,4 +33,11 @@ class CategoryForm(forms.ModelForm):
 
     class Meta:
         model = Category
-        fields = ["name", "desc", ]
+        fields = ["name", "desc",]
+
+
+class TagForm(forms.ModelForm):
+
+    class Meta:
+        model = Tag
+        fields = ["name", "desc",]

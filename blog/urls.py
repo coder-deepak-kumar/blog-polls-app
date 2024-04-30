@@ -21,4 +21,8 @@ urlpatterns = [
     path('category/new', views.new_category, name="new_category"),
     path('categories', views.category_list, name="category_list"),
 
+    #Tag
+     path('tag/new', views.new_tag, name="new_tag"),
+    path('tags', views.tag_list, name="tag_list"),
+
 ]

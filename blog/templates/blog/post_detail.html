@@ -15,6 +15,13 @@
             </time>
         {% endif %}
         <h2>{{ post.title }}</h2>
+        <p> {{post.category}} </p>  
+        <p>Created by - {{post.author}}</p>
         <p>{{ post.text|linebreaksbr }}</p>
+        <p>Tags:
+            {% for t in post.tag.all %}
+                {{ t.name }},
+            {% endfor %}
+        </p>
     </article>
 {% endblock %}

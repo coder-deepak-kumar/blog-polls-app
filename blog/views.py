@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, User, Category
+from .models import Post, User, Category, Tag
 from django.utils import timezone
-from .forms import PostForm, RegistorForm, LoginForm, ProfileForm, CategoryForm
+from .forms import PostForm, RegistorForm, LoginForm, ProfileForm, CategoryForm, TagForm
 from django.contrib.auth import login, authenticate, logout 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -23,6 +23,7 @@ def post_new(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
+            form.save_m2m()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
@@ -37,6 +38,7 @@ def post_edit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
+            form.save_m2m()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
@@ -106,3 +108,20 @@ def new_category(request):
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'category/category_list.html', {'categories': categories})
+
+
+#Tags
+def new_tag(request):
+    if request.method == "POST":
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'New Category created succesfully.')
+            return redirect('tag_list')
+    else:
+        form = TagForm()
+    return render(request, 'tag/new_tag.html', {'form': form})
+
+def tag_list(request):
+    tags = Tag.objects.all()
+    return render(request, 'tag/tag_list.html', {'tags': tags})
