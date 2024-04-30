@@ -6,9 +6,18 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     age = models.IntegerField(default=18)
     mobile = models.CharField(max_length=10)
+    
+class Category(models.Model):
+    name = models.CharField(max_length=60)
+    desc = models.TextField()
+    image = models.ImageField(upload_to='cat')
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
@@ -20,3 +29,4 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    

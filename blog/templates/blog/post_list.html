@@ -1,14 +1,16 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <h1>hello , {{ request.user.username }}</h1>
     {% for post in posts %}
-        <article class="post">
+        <article class="post mt-4">
             <time class="date">
                 {{ post.published_date }}
             </time>
             <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+            <p> {{post.category}} </p>
+            <p>Created by - {{post.author}}</p>
             <p>{{ post.text|linebreaksbr }}</p>
+
         </article>
     {% endfor %}
 {% endblock %}

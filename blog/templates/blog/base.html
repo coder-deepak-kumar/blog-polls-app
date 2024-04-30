@@ -20,6 +20,9 @@
                 <a href="{% url 'user-profile' %}" class="top-menu">
                     {{user.username}}
                 </a>
+                <a href="{% url 'new_category' %}" class="top-menu">
+                    New-Category
+                </a>
             {% else %}
             <a href="{% url 'login_view' %}" class="top-menu">
                 Login

@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, User
+from .models import Post, User, Category
 from django.utils import timezone
-from .forms import PostForm, RegistorForm, LoginForm, ProfileForm
+from .forms import PostForm, RegistorForm, LoginForm, ProfileForm, CategoryForm
 from django.contrib.auth import login, authenticate, logout 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+#Post
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
@@ -89,3 +90,19 @@ def profile_edit(request):
     else:
         form = ProfileForm(instance=user)
     return render(request, 'auth/profile_edit.html', {'form':form})
+
+#Category
+def new_category(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'New Category created succesfully.')
+            return redirect('post_list')
+    else:
+        form = CategoryForm()
+    return render(request, 'category/new_category.html', {'form': form})
+
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'category/category_list.html', {'categories': categories})
