@@ -34,8 +34,8 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    feature_img = models.ImageField(upload_to='image/feature_img/', blank=True, null=True)
-    thumbnail_img = models.ImageField(upload_to='image/thumbnail_img/', blank=True, null=True)
+    feature_img = models.ImageField(upload_to='image/feature_img/')
+    thumbnail_img = models.ImageField(upload_to='image/thumbnail_img/')
     slug = AutoSlugField(populate_from='title', unique=True)
 
     def publish(self):
