@@ -5,7 +5,7 @@
 <article class="post mt-4">
     <aside class="actions">
         {% if post.author == request.user %}
-            <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
+            <a class="btn btn-secondary" href="{% url 'post_edit' slug=post.slug %}">
             {% include './icons/pencil-fill.svg' %}
             </a>
         {% endif %}
@@ -17,12 +17,12 @@
     {% endif %}
     <p>Created by - {{ post.author }}</p>
     <h2><img src="{{ post.thumbnail_img.url}}" alt="{{ post.title }}" style="border-radius: 50%; height: 50px;width: 50px;">{{ post.title }}</h2>
-    <p>{{ post.category }}</p>  
+    <h4><a href="{% url 'category_posts' slug=post.category %}">{{ post.category }}</a></h4>
     <p><img src="{{ post.feature_img.url}}" alt="{{ post.title }}" style="height: 100%;width: 100%"></p>
     <p>{{ post.text|linebreaksbr }}</p>
     <p>Tags:
         {% for t in post.tag.all %}
-            {{ t.name }},
+        <h4><a href="{% url 'tag_posts' slug=t.name %}">{{ t.name }},</a></h4>
         {% endfor %}
     </p>
 </article>

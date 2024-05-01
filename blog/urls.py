@@ -2,11 +2,12 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    
     #Post
     path('', views.post_list, name='post_list'),
-    path('post/<int:pk>/', views.post_detail, name="post_detail"),
+    path('post/<slug:slug>/', views.post_detail, name="post_detail"),
     path('post/new', views.post_new, name="post_new"),
-    path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
+    path('post/<slug:slug>/edit/', views.post_edit, name='post_edit'),
 
     #Authentication
     path('register', views.register_view, name="register_view"),
@@ -20,9 +21,11 @@ urlpatterns = [
     #Category
     path('category/new', views.new_category, name="new_category"),
     path('categories', views.category_list, name="category_list"),
+    path('category/<slug:slug>', views.category_posts, name="category_posts"),
 
     #Tag
-     path('tag/new', views.new_tag, name="new_tag"),
+    path('tag/new', views.new_tag, name="new_tag"),
     path('tags', views.tag_list, name="tag_list"),
+    path('tag/<slug:slug>', views.tag_posts, name="tag_posts"),
 
 ]

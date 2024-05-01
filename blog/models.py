@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
+from autoslug import AutoSlugField
 
 class User(AbstractUser):
     age = models.IntegerField(default=18)
@@ -11,6 +13,7 @@ class Category(models.Model):
     name = models.CharField(max_length=60)
     desc = models.TextField()
     image = models.ImageField(upload_to='cat')
+    slug = AutoSlugField(populate_from='name', unique=True)
 
     def __str__(self):
         return self.name
@@ -18,6 +21,7 @@ class Category(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=60)
     desc = models.TextField()
+    slug = AutoSlugField(populate_from='name', unique=True)
 
     def __str__(self):
         return self.name
@@ -32,6 +36,7 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null=True)
     feature_img = models.ImageField(upload_to='image/feature_img/', blank=True, null=True)
     thumbnail_img = models.ImageField(upload_to='image/thumbnail_img/', blank=True, null=True)
+    slug = AutoSlugField(populate_from='title', unique=True)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -39,6 +44,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"slug": self.slug})
     
 
 class Comment(models.Model): 

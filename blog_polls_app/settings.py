@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'polls',
     'crispy_forms',
     'crispy_bootstrap4',
+    'autoslug',
 ]
 
 MIDDLEWARE = [

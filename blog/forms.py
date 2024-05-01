@@ -9,7 +9,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = ('id','created_date','author',)
+        exclude = ('id','created_date','author','slug')
 
 class RegistorForm(UserCreationForm):
 
