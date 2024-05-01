@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, User, Category, Tag
+from .models import Post, Category, Tag, Comment
 from django.utils import timezone
-from .forms import PostForm, RegistorForm, LoginForm, ProfileForm, CategoryForm, TagForm
+from .forms import PostForm, RegistorForm, LoginForm, ProfileForm, CategoryForm, TagForm, CommentForm
 from django.contrib.auth import login, authenticate, logout 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -13,7 +13,32 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    comments = post.comments.filter(active=True, parent__isnull=True)
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            parent_obj = None
+            try:
+                parent_id = int(request.POST.get('parent_id'))
+            except:
+                parent_id = None
+            if parent_id:
+                parent_obj = Comment.objects.get(id=parent_id)
+                if parent_obj:
+                    replay_comment = comment_form.save(commit=False)
+                    replay_comment.parent = parent_obj
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+            return redirect('post_detail', post.id)
+    else:
+        comment_form = CommentForm()
+    return render(request,
+                  'blog/post_detail.html',
+                  {'post': post,
+                   'comments': comments,
+                   'comment_form': comment_form})
+
 
 def post_new(request):
     if request.method == "POST":
