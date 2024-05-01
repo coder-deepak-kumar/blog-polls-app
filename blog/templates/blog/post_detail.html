@@ -16,8 +16,9 @@
         </time>
     {% endif %}
     <p>Created by - {{ post.author }}</p>
-    <h2>{{ post.title }}</h2>
+    <h2><img src="{{ post.thumbnail_img.url}}" alt="{{ post.title }}" style="border-radius: 50%; height: 50px;width: 50px;">{{ post.title }}</h2>
     <p>{{ post.category }}</p>  
+    <p><img src="{{ post.feature_img.url}}" alt="{{ post.title }}" style="height: 100%;width: 100%"></p>
     <p>{{ post.text|linebreaksbr }}</p>
     <p>Tags:
         {% for t in post.tag.all %}
@@ -26,61 +27,59 @@
     </p>
 </article>
 
-</article>
 <!-- comment section -->
 
 <!-- Comments Form -->
-<h2>Add a new comment</h2>
-<form action="." method="post">
-    {{ comment_form.as_p }}
-    {% csrf_token %}
-    <button type="submit">Add comment</button>
-</form>
+    <h2>Add a new comment</h2>
+    <form action="." method="post">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <button type="submit">Add comment</button>
+    </form>
 
 <!-- Comment with nested comments -->
 {% for comment in comments %}
-<div class="comment" >
-    <p class="info" style="margin: 0px;">{{ comment.name }} | {{ comment.created }}</p>
-    {{ comment.body|linebreaks }}
+    <div class="comment" >
+        <p class="info" style="margin: 0px;">{{ comment.name }} | {{ comment.created }}</p>
+        {{ comment.body|linebreaks }}
 
-    <div style="margin-left: 60px; ">
-        {% for replay in comment.replies.all %}
-        <p class="info" style="margin: 0px;">{{ replay.name }} | {{ replay.created }}</p>
-        {{ replay.body|linebreaks}}
-        {% endfor %}
+        <div style="margin-left: 60px; ">
+            {% for replay in comment.replies.all %}
+            <p class="info" style="margin: 0px;">{{ replay.name }} | {{ replay.created }}</p>
+            {{ replay.body|linebreaks}}
+            {% endfor %}
+        </div>
+        <button type="button" style="margin-left: 60px;" class="collapsible" >Reply</button>
+
+        <div class="content" style="display: none; margin-left: 30px;">
+            <form action="." method="post">
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                <!-- Hidden input for parent comment.id -->
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <input class="btn btn-primary" type="submit" value="Reply">
+            </form>
+        </div>
     </div>
-    <button type="button" style="margin-left: 60px;" class="collapsible" >Reply</button>
-
-    <div class="content" style="display: none; margin-left: 30px;">
-        <form action="." method="post">
-            {{ comment_form.as_p }}
-            {% csrf_token %}
-            <!-- Hidden input for parent comment.id -->
-            <input type="hidden" name="parent_id" value="{{ comment.id }}">
-            <input class="btn btn-primary" type="submit" value="Reply">
-
-        </form>
-    </div>
-</div>
 {% empty %}
-<h4>There are no comments yet.</h4>
+    <h4>There are no comments yet.</h4>
 {% endfor %}
 
 <script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
+    for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+        content.style.display = "none";
+        } else {
+        content.style.display = "block";
+        }
+    });
     }
-  });
-}
 </script>
 
 <!-- end comment section -->

@@ -7,7 +7,7 @@
                 {{ post.published_date }}
             </time>
             <p>Created by - {{post.author}}</p>
-            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+            <h2><a href="{% url 'post_detail' pk=post.pk %}"><img src="{{ post.thumbnail_img.url}}" alt="{{ post.title }}" style="border-radius: 50%; height: 50px;width: 50px;">{{ post.title }}</a></h2>
             <p> {{post.category}} </p>  
             <p>{{ post.text|linebreaksbr }}</p>
 
