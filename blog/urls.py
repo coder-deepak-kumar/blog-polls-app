@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     #Profile
     path('profile', views.profile, name='user-profile'),
     path('profile_edit/', views.profile_edit, name='profile_edit'),
+    path('author/<int:id>', views.user_posts, name='user_posts'),
 
     #Category
     path('category/new', views.new_category, name="new_category"),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('tags', views.tag_list, name="tag_list"),
     path('tag/<slug:slug>', views.tag_posts, name="tag_posts"),
 
+    #admin
     path('export/', views.export, name='export_user'),
 
 ]

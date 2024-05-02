@@ -124,7 +124,14 @@ def profile_edit(request):
         form = ProfileForm(instance=user)
     return render(request, 'auth/profile_edit.html', {'form':form})
 
+def user_posts(request, id):
+    author = get_object_or_404(User, id=id)
+    posts = Post.objects.filter(author=author)
+    return render(request, 'blog/post_list.html', {'posts': posts})
+
+
 #Category
+@login_required
 def new_category(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -142,10 +149,11 @@ def category_list(request):
 
 def category_posts(request, slug):
     category = get_object_or_404(Category, slug=slug)
-    posts = category.post_set.all()
+    posts = Post.objects.filter(category=category)
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 #Tags
+@login_required
 def new_tag(request):
     if request.method == "POST":
         form = TagForm(request.POST)
@@ -163,18 +171,16 @@ def tag_list(request):
 
 def tag_posts(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
-    posts = tag.post_set.all()
+    posts = Post.objects.filter(tag=tag)
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
-
+#Admin panel File Export
 def export(request):
     timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
     unique_filename = f'user_{timestamp}.csv'
-
     file_path = os.path.join(settings.MEDIA_ROOT, unique_filename)
 
-    # Create and write the CSV file
     with open(file_path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         for model in apps.get_models():
@@ -185,7 +191,6 @@ def export(request):
                 writer.writerow([getattr(instance, field) for field in fields])
             writer.writerow([])  
 
-    # Serve the file for download
     with open(file_path, 'rb') as file:
         response = HttpResponse(file.read(), content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="user.csv"'

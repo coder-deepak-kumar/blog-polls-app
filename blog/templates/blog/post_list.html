@@ -1,16 +1,16 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-
-
     {% for post in posts %}
         <article class="post mt-4">
             <time class="date">
                 {{ post.published_date }}
             </time>
-            <p>Created by - {{post.author}}</p>
+            <div class="pb-2">
+                <h6>Author - <a href="{% url 'user_posts' id=post.author.id %}">{{ post.author }}</a></h6>
+            </div>
             <h2><a href="{% url 'post_detail' slug=post.slug %}"><img src="{{ post.thumbnail_img.url}}" alt="{{ post.title }}" style="border-radius: 50%; height: 50px;width: 50px;">{{ post.title }}</a></h2>
-            <p> {{post.category}} </p>  
+            <h4><a href="{% url 'category_posts' slug=post.category %}">{{ post.category }}</a></h4>
             <p>{{ post.text|linebreaksbr }}</p>
 
         </article>

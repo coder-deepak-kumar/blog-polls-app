@@ -22,7 +22,7 @@
     <p>{{ post.text|linebreaksbr }}</p>
     <p>Tags:
         {% for t in post.tag.all %}
-        <h4><a href="{% url 'tag_posts' slug=t.name %}">{{ t.name }},</a></h4>
+        <h4><a href="{% url 'tag_posts' slug=t %}">{{ t }},</a></h4>
         {% endfor %}
     </p>
 </article>
