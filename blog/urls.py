@@ -28,4 +28,6 @@ urlpatterns = [
     path('tags', views.tag_list, name="tag_list"),
     path('tag/<slug:slug>', views.tag_posts, name="tag_posts"),
 
+    path('export/', views.export, name='export_user'),
+
 ]

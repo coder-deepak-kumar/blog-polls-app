@@ -1,10 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Category, Tag, Comment
+from .models import Post, Category, Tag, Comment, User
 from django.utils import timezone
 from .forms import PostForm, RegistorForm, LoginForm, ProfileForm, CategoryForm, TagForm, CommentForm
 from django.contrib.auth import login, authenticate, logout 
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponse
+from django.conf import settings
+from datetime import datetime
+import csv, os
+from django.apps import apps
+
 
 #Post
 def post_list(request):
@@ -137,7 +143,7 @@ def category_list(request):
 def category_posts(request, slug):
     category = get_object_or_404(Category, slug=slug)
     posts = category.post_set.all()
-    return render(request, 'category/category_posts.html', {'posts': posts})
+    return render(request, 'blog/post_list.html', {'posts': posts})
 
 #Tags
 def new_tag(request):
@@ -158,4 +164,30 @@ def tag_list(request):
 def tag_posts(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
     posts = tag.post_set.all()
-    return render(request, 'tag/tag_posts.html', {'posts': posts})
+    return render(request, 'blog/post_list.html', {'posts': posts})
+
+
+
+def export(request):
+    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+    unique_filename = f'user_{timestamp}.csv'
+
+    file_path = os.path.join(settings.MEDIA_ROOT, unique_filename)
+
+    # Create and write the CSV file
+    with open(file_path, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        for model in apps.get_models():
+            fields = [field.name for field in model._meta.fields]
+            writer.writerow([f'{model.__name__}'])
+            writer.writerow(fields)
+            for instance in model.objects.all():
+                writer.writerow([getattr(instance, field) for field in fields])
+            writer.writerow([])  
+
+    # Serve the file for download
+    with open(file_path, 'rb') as file:
+        response = HttpResponse(file.read(), content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="user.csv"'
+
+    return response
