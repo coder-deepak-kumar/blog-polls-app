@@ -27,7 +27,8 @@ class PostAdmin(ExportActionMixin, admin.ModelAdmin):
     list_filter = ('id', 'author', 'category')
     search_fields = ('id', 'slug')    
     autocomplete_fields = ['author','category']
-    
+    filter_horizontal = ['tag']
+
 @admin.register(Category)
 class CategoryAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ('id', 'name', 'desc', 'slug')
