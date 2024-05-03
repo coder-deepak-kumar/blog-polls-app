@@ -1,11 +1,7 @@
 from django.contrib import admin
-from .models import Post, Category, Tag, Comment
-from django.contrib.auth import get_user_model
+from .models import Post, Category, Tag, Comment, User
 from django.contrib.auth.admin import UserAdmin as OrigUserAdmin
 from import_export.admin import ExportActionMixin
-
-User = get_user_model()
-
 
 @admin.register(User)
 class UserAdmin(ExportActionMixin, OrigUserAdmin):

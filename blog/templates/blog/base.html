@@ -13,12 +13,18 @@
             {% if user.is_authenticated %}
 
                 <div class="btn-group top-menu">
-                    <a href="{% url 'user-profile' %}"><img src="{{ user.user_img.url}}" alt="{{ user.name }}" style="border-radius: 50%; height: 50px;width: 50px;"></a>
+                    {% if user.user_img %}
+                        <a href="{% url 'user-profile' %}"><img src="{{ user.user_img.url}}" alt="{{ user.name }}" style="border-radius: 50%; height: 50px;width: 50px;"></a>
+                    {% else %}
+                        <a href="{% url 'user-profile' %}" class="top-menu">
+                            <h3>{{ user.username }}</h3>
+                        </a>
+                    {% endif %}
                     <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     </button>
                     <div class="dropdown-menu">
                     <a class="dropdown-item" href="{% url 'user-profile' %}">Profile</a>
-                    <a class="dropdown-item" href="{% url 'post_new' %}">Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a>
                     </div>
                 </div>
                 
