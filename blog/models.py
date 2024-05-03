@@ -8,7 +8,8 @@ from autoslug import AutoSlugField
 class User(AbstractUser):
     age = models.IntegerField(default=18)
     mobile = models.CharField(max_length=10)
-    
+    user_img = models.ImageField(upload_to='image/user_img/')
+
 class Category(models.Model):
     name = models.CharField(max_length=60)
     desc = models.TextField()

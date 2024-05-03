@@ -317,4 +317,187 @@ h4 {
     }
 
 
-    
+
+      .logo-wrapper {
+        padding-left: 56px;
+      }
+      
+      .title-wrapper {
+        left: 0;
+        right: 0;
+        text-align: right;
+        flex-grow: 1;
+      }
+      
+      .avatar-wrapper {
+        padding-right: 56px;
+        position: relative;
+      }
+      
+      .logo {
+        height: 30px;
+        line-height: 40px;
+        max-width: 96px;
+        margin-top: 0.35rem;
+      }
+      
+      .log-shellHeaderTitle {
+        font-size: 20px;
+        line-height: 36px;
+        color: #fff;
+        text-overflow: ellipsis;
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        font-weight: inherit;
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+      }
+      
+      .log-langButton {
+        padding-right: 40px;
+      }
+      
+      @media only screen and (max-width: 480px) {
+        .log-langButton {
+          padding-right: 10px;
+        }
+      }
+      
+      #log-LangButtSwitch {
+        background: transparent;
+        cursor: pointer;
+        display: block;
+        position: relative;
+        float: left;
+        width: 40px;
+        padding: 2px;
+        margin-top: 0.25rem;
+        border: 2px solid #fff;
+        border-radius: 28px;
+      }
+      
+      .log-switchHandle {
+        display: block;
+        background: #fff;
+        height: 20px;
+        width: 20px;
+        z-index: 9999;
+        border-radius: 20px;
+      }
+      
+      .log-switchLabels {
+        position: absolute;
+        top: 5px;
+        z-index: -1;
+        width: 100%;
+        font-family: Helvetica, sans-serif;
+        font-weight: bold;
+        color: #fff;
+        text-transform: uppercase;
+        text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+      }
+      
+      .log-switchLabels:before {
+        content: "EN";
+        position: absolute;
+        left: 21px;
+        font-size: 12px;
+      }
+      
+      .log-switchLabels:after {
+        content: "DE";
+        position: absolute;
+        right: 26px;
+        font-size: 12px;
+      }
+      
+      .fa-user-o:before {
+        font-size: 1.375rem;
+        color: #fff;
+      }
+      
+      .avatar {
+        text-align: center;
+        margin-top: 0.35rem;
+        width: 25px;
+      }
+      
+      .log-popover {
+        visibility: visible;
+        z-index: 460;
+        display: block;
+        overflow: visible;
+        top: 121px;
+        left: 375.063px;
+        bottom: 10px;
+        transition: opacity 0.2s linear;
+        color: #333333;
+        min-width: 100px;
+        box-sizing: border-box;
+        outline: none;
+        max-width: 100%;
+        max-height: 84px;
+        min-height: 2rem;
+        overflow: hidden;
+        background: #ffffff;
+        border: none;
+        box-shadow: 0 0.625rem 1.875rem 0 rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem;
+      }
+      
+      .log-popover a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      
+      .log-popover a:hover {
+        background-color: #f0f0f0;
+      }
+      
+      .log-popover a:active,
+      .log-popover a:focus {
+        background: #e8eff6;
+        outline: 1px dotted #000000;
+        outline-offset: -2px;
+      }
+      
+      .log-popover:after,
+      .log-popover:before {
+        bottom: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      
+      .log-popover:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 10px;
+        margin-left: -10px;
+      }
+      
+    .log-popover:before {
+    border-color: rgba(51, 51, 51, 0);
+    border-bottom-color: #333333;
+    border-width: 11px;
+    margin-left: -11px;
+    }
+
+    .log-toolContainer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    transform: translateX(calc(-50% + 12.5px));
+    }

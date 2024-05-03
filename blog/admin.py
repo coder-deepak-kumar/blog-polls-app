@@ -9,7 +9,7 @@ User = get_user_model()
 
 @admin.register(User)
 class UserAdmin(ExportActionMixin, OrigUserAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'username', 'email','age','mobile')
+    list_display = ('id', 'first_name', 'last_name', 'username', 'email','age','mobile','user_img')
     list_filter = ('id', 'username', 'email')
     search_fields = ('id', 'username', 'email')
 

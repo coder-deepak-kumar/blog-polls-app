@@ -79,7 +79,7 @@ def post_edit(request, slug):
 #Authentication
 def register_view(request):
     if request.method == "POST":
-        form = RegistorForm(request.POST)
+        form = RegistorForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return redirect('login_view')

@@ -4,16 +4,30 @@
     {% if user.is_authenticated %}
     <!-- <center><h1>{{ user.username }} welcome to your profile page</h1></center> -->
     <div class="mt-4">
-        <img src="{{ user.userprofile.profile_picture.url }}" width = "150" height = "150"  />
+        <img src="{{ user.user_img.url }}" width = "150" height = "150"  />
         <h3>{{ user.username }}</h3>
         <a class="btn btn-secondary" href="{% url 'profile_edit' %}">
             Edit
             </a>
         <div class="row my-3 p-3">
-            <h3>Name: {{ user.first_name |capfirst }} {{ user.last_name }}</h3>
-            <h3>Email: {{ user.email }}</h3>
-            <h3>Mobile: {{ user.mobile }}</h3>
-            <h3>Age: {{ user.age }}</h3>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Age</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">{{ user.first_name |capfirst }} {{ user.last_name }}</th>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.mobile }}</td>
+                    <td>{{ user.age }}</td>
+                  </tr>
+                </tbody>
+              </table>
         </div>
     </div>
 

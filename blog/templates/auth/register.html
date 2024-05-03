@@ -14,15 +14,15 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-			  <form method="POST" class="form-group">
-				{% csrf_token %}
-				{{ form|crispy }}
-				<button type="submit" class="btn btn-success">Register</button>
+                <form method="POST" enctype="multipart/form-data" class="form-group">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <button type="submit" class="btn btn-success">Register</button>
 
-                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login"
-                    class="fw-bold text-body"><u>Login here</u></a></p>
+                  <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/login"
+                      class="fw-bold text-body"><u>Login here</u></a></p>
 
-              </form>
+                </form>
 
             </div>
           </div>

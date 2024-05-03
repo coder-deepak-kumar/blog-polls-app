@@ -32,9 +32,13 @@
 <!-- Comments Form -->
     <h2>Add a new comment</h2>
     <form action="." method="post">
-        {{ comment_form.as_p }}
+        <!-- {{ comment_form.as_p }} -->
         {% csrf_token %}
-        <button type="submit">Add comment</button>
+        {% for field in comment_form %}
+            <div class="col-6 text-start"> {{field.label}} </div>
+            <div class="col-6"> {{field}} </div>
+        {% endfor %}
+        <button type="submit" >Add comment</button>
     </form>
 
 <!-- Comment with nested comments -->
@@ -74,9 +78,9 @@
         this.classList.toggle("active");
         var content = this.nextElementSibling;
         if (content.style.display === "block") {
-        content.style.display = "none";
+            content.style.display = "none";
         } else {
-        content.style.display = "block";
+            content.style.display = "block";
         }
     });
     }
