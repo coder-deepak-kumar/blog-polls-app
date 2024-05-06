@@ -11,7 +11,8 @@
             </div>
             <h2><a href="{% url 'post_detail' slug=post.slug %}"><img src="{{ post.thumbnail_img.url}}" alt="{{ post.title }}" style="border-radius: 50%; height: 50px;width: 50px;">{{ post.title }}</a></h2>
             <h4><a href="{% url 'category_posts' slug=post.category %}">{{ post.category }}</a></h4>
-            <p>{{ post.text|linebreaksbr }}</p>
+            <p>{{ post.text|linebreaksbr|truncatewords:60 }}<a href="{% url 'post_detail' slug=post.slug %}"><u style="color: rgb(7, 163, 28);">view more</u></a>
+            </p>
 
         </article>
     {% endfor %}

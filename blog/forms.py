@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 class PostForm(forms.ModelForm):
 
@@ -13,6 +16,37 @@ class PostForm(forms.ModelForm):
 
 class RegistorForm(UserCreationForm):
 
+    def validate_mobile_length(value):
+        if len(str(value)) != 10:
+            raise ValidationError('Mobile number must be exactly 10 digits long.')
+        
+    first_name = forms.CharField(max_length=50 , required=True) 
+    last_name = forms.CharField(max_length=50)
+    username = forms.CharField(max_length=150, required=True)
+    email = forms.EmailField()
+    mobile = forms.IntegerField(validators=[validate_mobile_length])
+
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not first_name.isalpha():
+            raise forms.ValidationError("First name should contain only letters")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not last_name.isalpha():
+            raise forms.ValidationError("Last name should contain only letters")
+        return last_name
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            validate_email(email)
+        except ValidationError:
+            raise forms.ValidationError("Invalid email address")
+        return email
+    
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "email", "password1", "password2", "age", "mobile","user_img"]
@@ -26,7 +60,7 @@ class ProfileForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email", "age", "mobile"]
+        fields = ["username", "first_name", "last_name", "email", "age", "mobile", "user_img"]
 
 
 class CategoryForm(forms.ModelForm):

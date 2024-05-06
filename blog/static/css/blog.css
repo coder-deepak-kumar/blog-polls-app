@@ -501,3 +501,26 @@ h4 {
     left: 0;
     transform: translateX(calc(-50% + 12.5px));
     }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+  }
+  .form-group input[type="file"] {
+      margin-top: 5px;
+  }
+  .form-group .error-message {
+      color: red;
+      font-size: 12px;
+  }

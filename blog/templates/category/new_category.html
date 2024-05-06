@@ -2,8 +2,18 @@
 
 {% block content %}
     <center class="mt-4"><h2>New Category</h2></center>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-secondary">Save</button>
+        <form method="POST" enctype="multipart/form-data" class="form-group">{% csrf_token %}
+            {% for field in form %}
+            <center>
+            <label for="{{ field.id_for_label }}">{{ field.label }} {% if field.field.required %}<span style="color: red">*</span>{% endif %}</label>
+            {{field}}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+            </center>
+            {% endfor %}
+        <center><button type="submit" class="save btn btn-secondary mt-3" style="float: none;">Save</button></center>
     </form>
 {% endblock %}

@@ -2,13 +2,24 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-    <!-- <center><h1>{{ user.username }} welcome to your profile page</h1></center> -->
     <div class="mt-4">
-        <img src="{{ user.user_img.url }}" width = "150" height = "150"  />
-        <h3>{{ user.username }}</h3>
-        <a class="btn btn-secondary" href="{% url 'profile_edit' %}">
+      <div class="row">
+        <div class="col-6">
+          {% if user.user_img %}
+            <img src="{{ user.user_img.url }}" width = "150" height = "150"  />
+            <h3>{{ user.username }}</h3>
+          {% else %}
+              <h3>{{ user.username }}</h3>
+          {% endif %}
+        </div>
+        <div class="col-6 text-center ">
+          <a class="btn btn-secondary" href="{% url 'profile_edit' %}">
             Edit
-            </a>
+        </a>
+        </div>
+      </div> 
+
+
         <div class="row my-3 p-3">
             <table class="table table-striped">
                 <thead>

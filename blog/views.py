@@ -10,6 +10,7 @@ from django.conf import settings
 from datetime import datetime
 import csv, os
 from django.apps import apps
+from django.contrib import messages
 
 
 #Post
@@ -55,6 +56,7 @@ def post_new(request):
             post.published_date = timezone.now()
             post.save()
             form.save_m2m()
+            messages.success(request, f'User new post created succesfully.')
             return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm()
@@ -70,6 +72,7 @@ def post_edit(request, slug):
             post.published_date = timezone.now()
             post.save()
             form.save_m2m()
+            messages.success(request, f'User Post details updated succesfully.')
             return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
@@ -82,8 +85,8 @@ def register_view(request):
         form = RegistorForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Registration successful. Please log in.')
             return redirect('login_view')
-    
     else:
         form = RegistorForm()
     return render(request, 'auth/register.html', {'form': form})
@@ -96,7 +99,8 @@ def login_view(request):
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user:
-                login(request, user)    
+                login(request, user) 
+                messages.success(request, 'You are Logged In')   
                 return redirect('post_list')
     else:
         form = LoginForm()
@@ -104,18 +108,17 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(request, 'You are Logout.')   
     return redirect('post_list')
 
-@login_required
 def profile(request):
     user = request.user
     return render(request, 'auth/profile.html', {"user": user})
 
-@login_required
 def profile_edit(request):
     user = request.user
     if request.method == "POST":
-        form = ProfileForm(request.POST, instance=user)
+        form = ProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, f'User Details updated succesfully.')
@@ -159,7 +162,7 @@ def new_tag(request):
         form = TagForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, f'New Category created succesfully.')
+            messages.success(request, f'New Tag created succesfully.')
             return redirect('tag_list')
     else:
         form = TagForm()
