@@ -14,7 +14,7 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-3">Create an account</h2>
 
-                <form method="POST" enctype="multipart/form-data" class="form-group">
+                <form method="POST" enctype="multipart/form-data" class="form-group" id="myForm">
                   {% csrf_token %}
 
                   {% for field in form %}
@@ -43,5 +43,28 @@
     </div>
   </div>
 </section>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var phoneInput = document.getElementById("id_mobile");
+      
+      phoneInput.addEventListener("input", function(event) {
+          var inputLength = phoneInput.value.length;
+          phoneInput.value = phoneInput.value.replace(/\D/g, '');
+
+          if (parseInt(phoneInput.value) < 0) {
+            phoneInput.value = '';
+            }
+
+          if (inputLength > 10) {
+              phoneInput.value = phoneInput.value.slice(0, 10);
+          }
+      });
+});
+  </script>
+
 {% endblock %}
+
+
 

@@ -6,7 +6,8 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+# from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class PostForm(forms.ModelForm):
 
@@ -15,17 +16,12 @@ class PostForm(forms.ModelForm):
         exclude = ('id','created_date','author','slug')
 
 class RegistorForm(UserCreationForm):
-
-    def validate_mobile_length(value):
-        if len(str(value)) != 10:
-            raise ValidationError('Mobile number must be exactly 10 digits long.')
-        
     first_name = forms.CharField(max_length=50 , required=True) 
     last_name = forms.CharField(max_length=50)
     username = forms.CharField(max_length=150, required=True)
     email = forms.EmailField()
-    mobile = forms.IntegerField(validators=[validate_mobile_length])
-
+    mobile = forms.IntegerField(label='Mobile Number',validators=[MinValueValidator(0),
+                                       MaxValueValidator(10)])
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get('first_name')
